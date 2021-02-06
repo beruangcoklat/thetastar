@@ -29,8 +29,8 @@ const initMap = (source, target) => {
     map.push(row);
   }
 
-  for (let i = 0; i < 12; i++) {
-    map[3 + i][15].type = WALL;
+  for (let i = 0; i < 13; i++) {
+    map[0 + i][15].type = WALL;
   }
 
   return map;
@@ -144,7 +144,10 @@ const shortestPath = (map, source, target) => {
       nextNode.g += curr.g;
       nextNode.h = euclidean(nextNode, target);
       nextNode.f = nextNode.g + nextNode.h;
-      nextNode.parent = curr;
+
+      if (nextNode.parent === null || nextNode.parent.f > curr.f) {
+        nextNode.parent = curr;
+      }
 
       if (curr.parent !== null && lineOfSight(map, nextNode, curr.parent)) {
         nextNode.parent = curr.parent;
